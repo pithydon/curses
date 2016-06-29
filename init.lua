@@ -49,24 +49,41 @@ minetest.register_craft({
 	}
 })
 
-minetest.register_node("curses:tree_monster", {
-	description = "Tree Monster",
-	tiles = {"default_tree_top.png", "default_tree_top.png", "default_tree.png", "default_tree.png", "default_tree.png", "default_tree.png^curses_tree_monster.png"},
-	paramtype2 = "facedir",
-	groups = {tree = 1, choppy = 2, oddly_breakable_by_hand = 1, flammable = 2},
-	drop = "default:tree",
-	sounds = default.node_sound_wood_defaults(),
-	on_rotate = screwdriver.disallow
-})
+local curse_a_tree = function(name)
+	local node_def = minetest.registered_nodes[name]
+	local subname = name:split(":")[2]
+	minetest.register_node("curses:"..subname.."_monster", {
+		description = node_def.description.." Monster",
+		tiles = {node_def.tiles[1], node_def.tiles[1], node_def.tiles[3],
+				node_def.tiles[3], node_def.tiles[3], node_def.tiles[3].."^curses_"..subname.."_monster.png"},
+		paramtype2 = "facedir",
+		groups = node_def.groups,
+		drop = name,
+		sounds = default.node_sound_wood_defaults(),
+		on_rotate = screwdriver.disallow
+	})
 
-minetest.override_item("default:tree", {
-	on_curse = function(pos)
-		minetest.swap_node(pos, {name = "curses:tree_monster"})
-	end
-})
+	minetest.override_item(name, {
+		on_curse = function(pos)
+			minetest.swap_node(pos, {name = "curses:"..subname.."_monster"})
+		end
+	})
+end
+
+curse_a_tree("default:tree")
+curse_a_tree("default:jungletree")
+curse_a_tree("default:pine_tree")
+curse_a_tree("default:acacia_tree")
+curse_a_tree("default:aspen_tree")
 
 minetest.register_abm({
-	nodenames = {"curses:tree_monster"},
+	nodenames = {
+		"curses:tree_monster",
+		"curses:jungletree_monster",
+		"curses:pine_tree_monster",
+		"curses:acacia_tree_monster",
+		"curses:aspen_tree_monster"
+	},
 	interval = 1,
 	chance = 1,
 	action = function(pos, node)
@@ -76,7 +93,7 @@ minetest.register_abm({
 				local player_pos = obj:getpos()
 				local dir = vector.direction(player_pos, pos)
 				local facedir = minetest.dir_to_facedir(dir)
-				minetest.swap_node(pos, {name = "curses:tree_monster", param2 = facedir})
+				minetest.swap_node(pos, {name = node.name, param2 = facedir})
 				if minetest.setting_getbool("enable_damage") then
 					local face_pos
 					if facedir == 0 then
