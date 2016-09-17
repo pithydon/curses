@@ -4,14 +4,13 @@ minetest.register_craftitem("curses:curse", {
 	wield_image = "curses_curse.png",
 	liquids_pointable = true,
 	on_place = function(itemstack, placer, pointed_thing)
-		if pointed_thing.type == "node" then
-			local pos = minetest.get_pointed_thing_position(pointed_thing, above)
+		local pos = minetest.get_pointed_thing_position(pointed_thing, above)
+		if pointed_thing.type == "node" and not minetest.is_protected(pos, placer:get_player_name()) then
 			local node = minetest.get_node(pos)
-			local node = minetest.registered_nodes[node.name]
-			if node.on_curse then
-				node.on_curse(pos)
-				local creative = minetest.setting_getbool("creative_mode")
-				if not creative then
+			local node_def = minetest.registered_nodes[node.name]
+			if node_def.on_curse then
+				node_def.on_curse(pos)
+				if not minetest.setting_getbool("creative_mode") then
 					itemstack:take_item()
 					return itemstack
 				end
@@ -89,7 +88,7 @@ minetest.register_node("curses:filth_water", {
 	liquid_viscosity = 4,
 	liquid_renewable = false,
 	liquid_range = 0,
-	damage_per_second = 4 * 2,
+	damage_per_second = 4,
 	post_effect_color = {a = 255, r = 57, g = 56, b = 12},
 	groups = {oddly_breakable_by_hand = 1}
 })
