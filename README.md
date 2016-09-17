@@ -59,4 +59,13 @@ For these and/or other purposes and motivations, and without any expectation of 
 	d.	Affirmer understands and acknowledges that Creative Commons is not a party to this document and has no duty or obligation with respect to this CC0 or use of the Work.
 ```
 
+API:
+
+To make a node curse able add "on_curse = function(pos)" to the node_def.
+```lua
+on_curse = function(pos)
+	minetest.swap_node(pos, {name = "modname:cursed_node"})
+end
+```
+
 [pithydon]: <https://github.com/pithydon>
