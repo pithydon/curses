@@ -1,28 +1,28 @@
 minetest.register_craftitem("curses:curse", {
-  description = "Curse",
-  inventory_image = "curses_curse.png",
-  wield_image = "curses_curse.png",
-  on_place = function(itemstack, placer, pointed_thing)
-    if pointed_thing.type == "node" then
+	description = "Curse",
+	inventory_image = "curses_curse.png",
+	wield_image = "curses_curse.png",
+	on_place = function(itemstack, placer, pointed_thing)
+		if pointed_thing.type == "node" then
 			local pos = minetest.get_pointed_thing_position(pointed_thing, above)
 			local node = minetest.get_node(pos)
 			local node = minetest.registered_nodes[node.name]
 			if node.on_curse then
 				node.on_curse(pos)
-      	local creative = minetest.setting_getbool("creative_mode")
-      	if not creative then
-        	itemstack:take_item()
-        	return itemstack
-      	end
+				local creative = minetest.setting_getbool("creative_mode")
+				if not creative then
+					itemstack:take_item()
+					return itemstack
+				end
 			end
-    end
-  end
+		end
+	end
 })
 
 minetest.register_craftitem("curses:curse_start", {
-  description = "Curse Start",
-  inventory_image = "curses_curse_start.png",
-  wield_image = "curses_curse_start.png",
+	description = "Curse Start",
+	inventory_image = "curses_curse_start.png",
+	wield_image = "curses_curse_start.png",
 })
 
 minetest.register_craft({
