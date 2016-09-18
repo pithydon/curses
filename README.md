@@ -1,4 +1,6 @@
-# curses by [pithydon]
+curses by [pithydon]
+
+Make curses and curse things.
 
 code license:
 
