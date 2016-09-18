@@ -1,6 +1,6 @@
 curses by [pithydon]
 
-Make curses and curse things.
+Curse things with the curse tool. curses could do anything, depending on what is being cursed.
 
 code license:
 
