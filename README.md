@@ -1,10 +1,6 @@
-curses by pithydon
+curses
 
-Curse things with the curse tool. curses could do anything, depending on what is being cursed.
-
-Forum: https://forum.minetest.net/viewtopic.php?f=11&t=14894
-
-Github: https://github.com/pithydon/curses
+Curse things with the curse tool. Curses could do anything, depending on what is being cursed.
 
 License for all of this mod is "CC0", see below.
 
